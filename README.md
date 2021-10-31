@@ -12,6 +12,7 @@
 4. Enable `Developer Mode` checkbox.
 5. Drag the `xbox-precios-extension-main` folder anywhere on the page to import it. Do not delete the folder afterwards.
 6. Navigate to [Xbox Store AR](https://www.xbox.com/es-ar/games/all-games)
+7. Click the extension icon to turn-on.
 
 ## Made with ❤ by
 
