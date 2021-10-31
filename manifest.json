@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "name": "Xbox en Precios Argentos",
+  "description": "Muestra los precios en pesos argentinos + impuestos.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "assets/icon.png"
+  },
+  "permissions": [
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.xbox.com/*/**"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "assets/icon.png",
+    "default_title": "Xbox en Precios Argentos"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.xbox.com/*/**"
+      ],
+      "js": ["src/content-script.js"]
+    }
+  ]
+}
