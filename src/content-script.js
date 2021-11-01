@@ -7,8 +7,8 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
   function fetchOfficialDollar() {
     return fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
       .then(response => response.json())
-      .then(casa => {
-        return parseFloat(casa[0].casa.compra.replace(',', '.'));
+      .then(data => {
+        return parseFloat(data[0].casa.compra.replace(',', '.'));
       });
   }
   async function boot() {
