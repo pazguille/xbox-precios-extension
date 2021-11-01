@@ -4,6 +4,8 @@
 
 <img src="./assets/xbox.png">
 
+<img src="./assets/xbox2.png">
+
 ### Installation Instructions
 
 1. Download this repo as a [ZIP file](https://github.com/pazguille/xbox-precios-extension/archive/main.zip).
