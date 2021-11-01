@@ -26,16 +26,30 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
     return ((price / dollar) * dollar * 1.65).toFixed(2);
   };
 
-  function run() {
-    const $prices = document.querySelectorAll('[itemprop="price"]');
+  function run(selector) {
+    const $prices = document.querySelectorAll(selector);
     $prices.forEach((node) => {
-      const price = Number.parseFloat(node.textContent.replace(/(\$\s|\.)/gi, '').replace(',','.')).toFixed();
+      const price = Number.parseFloat(node.textContent.replace(/(\ARS\$\s|\$\s|\.|\+)/gi, '').replace(',','.')).toFixed(2);
       node.innerHTML = `💳🇦🇷 ${formatter.format(convert(price, dollar))}`;
     });
   }
 
-  const target = document.querySelector('.gameDivsWrapper');
-  const observer = new MutationObserver(() => run());
-  observer.observe(target, { childList: true });
+  try {
+    const target = document.querySelector('.gameDivsWrapper');
+    const observer = new MutationObserver(() => run('[itemprop="price"]'));
+    observer.observe(target, { childList: true });
+  } catch (error) {}
+
+  try {
+    const target = document.querySelector('[class*="ProductDetailsHeader-module__container__"]');
+    const observer = new MutationObserver(() => run('[class*="Price-module__brandPrice"]'));
+    observer.observe(target, { childList: true, characterData: true });
+  } catch (error) {}
+
+  try {
+    const target = document.querySelector('.purchase1');
+    const observer = new MutationObserver(() => run('.purchase1 .rightCol *'));
+    observer.observe(target, { childList: true, characterData: true });
+  } catch (error) {}
 
 });
