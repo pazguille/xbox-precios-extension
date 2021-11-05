@@ -3,6 +3,13 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
     return;
   }
 
+  const IVA = 0.21;
+  const IIBB = 0.02;
+  const AFIP = 0.35;
+  const PAISup10 = 0.30;
+  const PAISdown10 = 0.08;
+  const taxes = 1+IVA+IIBB+AFIP;
+
   let dollar = 0;
   function fetchOfficialDollar() {
     return fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
@@ -23,7 +30,9 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
   });
 
   function convert(price, dollar) {
-    return ((price / dollar) * dollar * 1.65).toFixed(2);
+    const usdPrice = (price / dollar);
+    const pais = usdPrice > 10 ? PAISup10 : PAISdown10;
+    return (usdPrice * dollar * (taxes + pais)).toFixed(2);
   };
 
   function run(selector) {
