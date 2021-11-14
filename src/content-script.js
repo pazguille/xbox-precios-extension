@@ -6,9 +6,8 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
   const IVA = 0.21;
   const IIBB = 0.02;
   const AFIP = 0.35;
-  const PAISup10 = 0.30;
-  const PAISdown10 = 0.08;
-  const taxes = 1+IVA+IIBB+AFIP;
+  const PAIS = 0.08;
+  const taxes = (1+IVA+IIBB+AFIP+PAIS).toFixed(2);
 
   let dollar = 0;
   function fetchOfficialDollar() {
@@ -31,15 +30,14 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
 
   function convert(price, dollar) {
     const usdPrice = (price / dollar);
-    const pais = usdPrice > 10 ? PAISup10 : PAISdown10;
-    return (usdPrice * dollar * (taxes + pais)).toFixed(2);
+    return (usdPrice * dollar * taxes).toFixed(2);
   };
 
   function run(selector) {
     const $prices = document.querySelectorAll(selector);
     $prices.forEach((node) => {
       const price = Number.parseFloat(node.textContent.replace(/(\ARS\$\s|\$\s|\.|\+)/gi, '').replace(',','.')).toFixed(2);
-      node.innerHTML = `💳🇦🇷 ${formatter.format(convert(price, dollar))}`;
+      node.innerHTML = `🇦🇷 ${formatter.format(convert(price, dollar))} <small style="font-size:14px;display:block;">(impuestos incluidos)</small>`;
     });
   }
 
