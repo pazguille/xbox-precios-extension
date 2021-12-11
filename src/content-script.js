@@ -28,10 +28,15 @@ chrome.storage.local.get(['xbox-converter'], (flags) => {
     currency: 'ARS',
   });
 
+  function toFixed(number) {
+    return parseFloat(Number(number.toFixed(3)).toFixed(2));
+  }
+
   function convert(price, dollar) {
     const usdPrice = (price / dollar);
-    return (usdPrice * dollar * taxes).toFixed(2);
-  };
+    const final = toFixed(usdPrice * dollar) + toFixed(price * IVA) + toFixed(price * IIBB) + toFixed(price * AFIP) + toFixed(price * PAIS);
+    return final.toFixed(2);
+  }
 
   function run(selector) {
     const $prices = document.querySelectorAll(selector);
